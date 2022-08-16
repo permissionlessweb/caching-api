@@ -7,5 +7,14 @@ export async function allTokensAPI(db: Redis, req: any, res: any){
     const network = req.params.network;
     const address = req.params.address;
     const existingNFTKey = toExistingTokenKey(network);
-    await res.status(202).send(await getDb(db, existingNFTKey));
+    if(address){
+      await res.status(202).send(
+        (await getDb(db, existingNFTKey))[address]
+      );
+    }else{
+      await res.status(202).send(
+        (await getDb(db, existingNFTKey))
+      );
+    }
+    
   }

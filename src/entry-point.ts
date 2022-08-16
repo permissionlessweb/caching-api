@@ -80,7 +80,7 @@ async function main() {
   app.get('/nfts', async (_req: any, res: any) => {
     await res.status(404).send('You got the wrong syntax, sorry mate');
   });
-  db.flushdb();
+  //db.flushdb();
 
 
   // Query the current NFT database state and trigger update if necessary
@@ -95,6 +95,11 @@ async function main() {
 
   // Query all the migrated NFTs thus far
   app.get('/:network/all_tokens/:address', async (req: any, res: any) => {
+    return allTokensAPI(db, req, res);
+  });
+
+  // Query all the migrated NFTs thus far
+  app.get('/:network/all_tokens/', async (req: any, res: any) => {
     return allTokensAPI(db, req, res);
   });
 
