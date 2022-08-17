@@ -13,6 +13,10 @@ function toNFTInfoKey(network: string, address: string, tokenId: string) {
   return `nft_info:${tokenId}@${address}@${network}`;
 }
 
+export function toAllNFTInfoKey(network: string) {
+  return `all_nft_info:${network}`;
+}
+
 export function toExistingTokenKey(network: string) {
   return `existing_tokens:${network}`;
 }
@@ -24,6 +28,7 @@ export async function nftInfoAPI(db: Redis, req: any, res: any, processFunc: any
 
     let dbKey = toNFTInfoKey(network, address, tokenId);
     const existingNFTKey = toExistingTokenKey(network);
+    const allNFTInfoKey = toAllNFTInfoKey(network);
     let nftInfo = await getDb(db, dbKey);
 
     // If the nftInfo was saved in the db, we return it directly
@@ -42,8 +47,19 @@ export async function nftInfoAPI(db: Redis, req: any, res: any, processFunc: any
     // We save the NFT info to the redis server
     await saveToDb(db, dbKey, nftInfo);
 
-    // We save all tokens from a contract in a single array 
-    let [_, allTokens] = await asyncAction(getDb(db, existingNFTKey))
+    // We save all the token info from a contract in a single array 
+	let [_, allNFTInfo] = await asyncAction(getDb(db, allNFTInfoKey))
+    if(!allNFTInfo){
+    	allNFTInfo = {};
+    }
+    if(!allNFTInfo[address]){
+    	allNFTInfo[address] = {}
+    }
+    allNFTInfo[address][tokenId] = nftInfo.info;
+    saveToDb(db, allNFTInfoKey, allNFTInfo)
+
+    // We save all tokens names from a contract in a single array 
+    let [__, allTokens] = await asyncAction(getDb(db, existingNFTKey))
     if(!allTokens){
     	allTokens = {};
     }
@@ -52,4 +68,5 @@ export async function nftInfoAPI(db: Redis, req: any, res: any, processFunc: any
     }
     allTokens[address].push(tokenId);
     saveToDb(db, existingNFTKey, allTokens)
+
 }
