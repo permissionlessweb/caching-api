@@ -21,34 +21,29 @@ export function toExistingTokenKey(network: string) {
   return `existing_tokens:${network}`;
 }
 
-export async function nftInfoAPI(db: Redis, req: any, res: any, processFunc: any){
+export async function nftInfoAPI(db: Redis, req: any, res: any){
     const address = req.params.address;
     const network = req.params.network;
     const tokenId = req.params.tokenId;
 
-    let dbKey = toNFTInfoKey(network, address, tokenId);
     const existingNFTKey = toExistingTokenKey(network);
     const allNFTInfoKey = toAllNFTInfoKey(network);
-    let nftInfo = await getDb(db, dbKey);
+
+    let [_, allNFTInfo] = await asyncAction(getDb(db, allNFTInfoKey))
 
     // If the nftInfo was saved in the db, we return it directly
-    if(nftInfo){
-      return await res.status(200).send(processFunc(nftInfo));
+    if(allNFTInfo?.[address]?.[tokenId]){
+      return await res.status(200).send(allNFTInfo[address][tokenId]);
     }
 
     // Else we query it from the lcd
-    let error = null;
-    [error, nftInfo] = await asyncAction(getAllNFTInfo(network, address, tokenId))
+    const [error, nftInfo] = await asyncAction(getAllNFTInfo(network, address, tokenId))
     if(error){
       return await sendBackError(res, error);
     }      
-    await res.status(200).send(processFunc(nftInfo));
-
-    // We save the NFT info to the redis server
-    await saveToDb(db, dbKey, nftInfo);
+    await res.status(200).send(nftInfo.info);
 
     // We save all the token info from a contract in a single array 
-	let [_, allNFTInfo] = await asyncAction(getDb(db, allNFTInfoKey))
     if(!allNFTInfo){
     	allNFTInfo = {};
     }

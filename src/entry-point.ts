@@ -80,12 +80,12 @@ async function main() {
   app.get('/nfts', async (_req: any, res: any) => {
     await res.status(404).send('You got the wrong syntax, sorry mate');
   });
-  db.flushdb();
+  //db.flushdb();
 
 
   // Query the current NFT database state and trigger update if necessary
   app.get('/:network/nft_info/:address/tokenId/:tokenId', async (req: any, res: any) => {
-    return nftInfoAPI(db, req, res, (info: any)=> info.info);
+    return nftInfoAPI(db, req, res);
   });
   
   // Query the current NFT database state and trigger update if necessary
@@ -96,11 +96,6 @@ async function main() {
   // Query the current NFT database state and trigger update if necessary
   app.get('/:network/nft_info/', async (req: any, res: any) => {
     return allNFTInfoAPI(db, req, res);
-  });
-
-  // Query the owner of the a specific NFT
-  app.get('/:network/owner/:address/tokenId/:tokenId', async (req: any, res: any) => {
-    return nftInfoAPI(db, req, res, (info: any)=> info.access.owner);
   });
 
   // Query all the migrated NFTs thus far
