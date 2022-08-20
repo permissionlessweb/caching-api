@@ -8,8 +8,8 @@ import toobusy from 'toobusy-js';
 import Redis from 'ioredis';
 import Redlock from 'redlock';
 
-import { nftInfoAPI } from "./functions/nftInfo"
-import { allTokensAPI, allNFTInfoAPI } from "./functions/allTokens";
+import { nftInfoAPI } from './functions/nftInfo';
+import { allTokensAPI, allNFTInfoAPI } from './functions/allTokens';
 
 const PORT = process.env.PORT;
 const HTTPS_PORT = process.env.HTTPS_PORT;
@@ -49,7 +49,6 @@ async function initMutex(db: Redis) {
   return redlock;
 }
 
-
 // We start the server
 const app = express();
 
@@ -82,17 +81,19 @@ async function main() {
   });
   //db.flushdb();
 
-
   // Query the current NFT database state and trigger update if necessary
-  app.get('/:network/nft_info/:address/tokenId/:tokenId', async (req: any, res: any) => {
-    return nftInfoAPI(db, req, res);
-  });
-  
+  app.get(
+    '/:network/nft_info/:address/tokenId/:tokenId',
+    async (req: any, res: any) => {
+      return nftInfoAPI(db, req, res);
+    }
+  );
+
   // Query the current NFT database state and trigger update if necessary
   app.get('/:network/nft_info/:address/', async (req: any, res: any) => {
     return allNFTInfoAPI(db, req, res);
   });
-  
+
   // Query the current NFT database state and trigger update if necessary
   app.get('/:network/nft_info/', async (req: any, res: any) => {
     return allNFTInfoAPI(db, req, res);
