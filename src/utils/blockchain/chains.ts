@@ -20,7 +20,6 @@ export let fcds: any = {
   devnet: 'http://localhost:3060',
   testnet: 'https://api-elgafar.atlasdao.zone',
   mainnet: 'https://rpc-stargaze.atlasdao.zone',
-  // classic: 'https://columbus-fcd.terra.dev',
 };
 
 export const registered_nft_contracts: any = // https://assets.terra.money/cw721/contracts.json

@@ -1,21 +1,14 @@
-import { chains } from './chains';
-// import { LCDClient } from '@terra-money/terra.js';
-import { BroadcastTxSyncResponse, Tendermint37Client } from "@cosmjs/tendermint-rpc"
-import { StargateClient} from "@cosmjs/stargate"
 import { last } from 'lodash';
-
+import {AtlasCosmWasmClient} from './stargate'
 async function sendIndependentQuery(
   networkId: string,
   contractAddress: string,
   query: object
 ): Promise<any> {
+  const endpoint = process.env.RPC_ENDPOINT!;
+  const client = await AtlasCosmWasmClient.connect(endpoint)
 
-  const tmClient = await Tendermint37Client.connect(process.env.RPC_URL!)
-  
-
-  const lcdClient = new StargateClient(tmClient);
-
-  return lcdClient.wasm.contractQuery(contractAddress, query);
+  return client.queryContractSmart(contractAddress, query);
 }
 
 async function getAllNFTInfo(
