@@ -1,32 +1,27 @@
-import setten from './setten-env.js';
+// import setten from './setten-env.js';
 
 export const chains: any = {
   devnet: {
     URL: 'http://localhost:1317',
-    chainId: 'localterra'
+    chainId: 'local-net'
   },
   testnet: {
-    //URL: 'https://pisco-lcd.terra.dev/',
-    URL: `https://lcd.pisco.terra.setten.io/${setten.settenProject}?key=${setten.settenKey}`,
-    chainID: 'pisco-1'
-  },
-  classic: {
-    URL: 'https://columbus-lcd.terra.dev',
-    chainID: 'columbus-5'
+    //URL: 'https://api-elgafar.atlasdao.zone/',
+    URL: `https://rpc-elgafar.atlasdao.zone`,
+    chainID: 'elgafar-1'
   },
   mainnet: {
-    //URL: 'https://phoenix-lcd.terra.dev',
-    URL: `https://lcd.phoenix.terra.setten.io/${setten.settenProject}?key=${setten.settenKey}`,
-    chainID: 'phoenix-1'
+    URL: 'https://rpc-stargaze.atlasdao.zone/',
+    chainID: 'stargaze-1'
   }
 };
 
 export let fcds: any = {
   devnet: 'http://localhost:3060',
-  testnet: 'https://pisco-fcd.terra.dev',
-  classic: 'https://columbus-fcd.terra.dev',
-  mainnet: 'https://phoenix-fcd.terra.dev'
+  testnet: 'https://api-elgafar.atlasdao.zone',
+  mainnet: 'https://rpc-stargaze.atlasdao.zone',
+  // classic: 'https://columbus-fcd.terra.dev',
 };
 
-export const registered_nft_contracts: any =
-  'https://assets.terra.money/cw721/contracts.json';
+export const registered_nft_contracts: any = // https://assets.terra.money/cw721/contracts.json
+  '';

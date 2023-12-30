@@ -1,5 +1,7 @@
 import { chains } from './chains';
-import { LCDClient } from '@terra-money/terra.js';
+// import { LCDClient } from '@terra-money/terra.js';
+import { BroadcastTxSyncResponse, Tendermint37Client } from "@cosmjs/tendermint-rpc"
+import { StargateClient} from "@cosmjs/stargate"
 import { last } from 'lodash';
 
 async function sendIndependentQuery(
@@ -7,7 +9,11 @@ async function sendIndependentQuery(
   contractAddress: string,
   query: object
 ): Promise<any> {
-  const lcdClient = new LCDClient(chains[networkId]);
+
+  const tmClient = await Tendermint37Client.connect(process.env.RPC_URL!)
+  
+
+  const lcdClient = new StargateClient(tmClient);
 
   return lcdClient.wasm.contractQuery(contractAddress, query);
 }
