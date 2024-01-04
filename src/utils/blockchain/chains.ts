@@ -1,4 +1,5 @@
 // import setten from './setten-env.js';
+// import * as contracts from './registered.json';
 
 export const chains: any = {
   devnet: {
@@ -16,11 +17,10 @@ export const chains: any = {
   }
 };
 
-export let fcds: any = {
+export const fcds: any = {
   devnet: 'http://localhost:3060',
   testnet: 'https://api-elgafar.atlasdao.zone',
   mainnet: 'https://rpc-stargaze.atlasdao.zone',
 };
 
-export const registered_nft_contracts: any = // https://assets.terra.money/cw721/contracts.json
-  '';
+export const registered_nft_contracts: any = '';//  contracts; // https://assets.terra.money/cw721/contracts.json
