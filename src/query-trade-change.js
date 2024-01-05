@@ -1,15 +1,13 @@
+"use strict";
 // 'use strict';
-
 // import 'dotenv/config';
 // import Redis from 'ioredis';
 // import Axios from 'axios';
 // import pMap from 'p-map';
 // import _ from 'lodash';
-
 // import { TxLog, LCDClient } from '@terra-money/terra.js';
 // import RedisSMQ from 'rsmq';
 // import camelcaseObjectDeep from 'camelcase-object-deep';
-
 // import { chains, fcds } from './utils/blockchain/chains.js';
 // import {
 //   addToDB,
@@ -22,34 +20,27 @@
 //   // We start the db
 //   return new Redis();
 // }
-
 // async function quitDB(db: Redis) {
 //   // We start the db
 //   db.quit();
 // }
-
 // async function getHashSetCardinal(db: Redis) {
 //   return db.scard('p2p-trade-txshash');
 // }
-
 // async function hasTx(db: Redis, txHash: string): Promise<boolean> {
 //   return (await db.sismember('p2p-trade-txshash', txHash)) == 1;
 // }
-
 // let terra = new LCDClient(chains[process.env.CHAIN!]);
-
 // async function main() {
 //   let db = await initDB();
 //   await db.flushdb();
 //   await dropDB();
 //   await createTradeDB();
-
 //   const lcd_address = 'http://localhost:1317/';
 //   const fcd_address = 'http://localhost:3060';
 //   const lcd = Axios.create({
 //     baseURL: lcd_address
 //   });
-
 //   // We start querying after we left off
 //   let continueQuerying = true;
 //   do {
@@ -61,7 +52,6 @@
 //         'pagination.offset': offset
 //       }
 //     });
-
 //     // We start by query only transactions that have already been analyzed
 //     let txFilter = await Promise.all(
 //       response.data.tx_responses.map(
@@ -71,7 +61,6 @@
 //     let txToAnalyse = response.data.tx_responses.filter(
 //       (_: any, i: number) => txFilter[i]
 //     );
-
 //     // Then we iterate over the transactions and get the trade_id and/or (trade_id, counter_id)
 //     let idsToQuery: number[][] = txToAnalyse
 //       .map((tx: any) => {
@@ -89,8 +78,6 @@
 //           .flat();
 //       })
 //       .flat();
-
-
 //     // The we query the blockchain for trade info and put it into the database
 //     await pMap(
 //       _.compact(idsToQuery),
@@ -148,7 +135,6 @@
 //       },
 //       { concurrency: 1 }
 //     );
-
 //     // We add the transaction hashes to the redis set :
 //     await db.sadd(
 //       'p2p-trade-txshash',
@@ -158,9 +144,7 @@
 //       continueQuerying = false;
 //     }
 //   } while (continueQuerying);
-
 //   quitDB(db);
 //   destroyTradeDB();
 // }
-
 // main();

@@ -5,14 +5,10 @@
   "exports": "index.js",
   "type": "module",
   "scripts": {
-    "build:dev": "tsc --watch --preserveWatchOutput",
-    "build": "tsc --preserveWatchOutput",
-    "base": "node dist/entry-point.js",
-    "dev": "nodemon --watch dist -e js,ejs --exec npm run base",
-    "anal": "node dist/analytics/index.js",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "lint": "eslint . --ext .ts",
-    "server": "node dist/websocket-server.js"
+    "base": "node src/entry-point.js",
+    "dev": "nodemon --watch src -e js,ejs --exec npm run base",
+    "lint": "eslint . --ext .js",
+    "server": "node src/websocket-server.js"
   },
   "author": "",
   "license": "ISC",

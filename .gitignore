@@ -3,3 +3,5 @@ ipfs/*
 ipfs_client/*
 orbitdb/*
 node_modules/*
+.env
+dump.rdb

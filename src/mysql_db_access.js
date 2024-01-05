@@ -1,13 +1,5 @@
 // import knex from 'knex';
-
-export type Asset = {
-  [asset: string]: {
-    address: string;
-    amount?: number;
-    tokenId?: string;
-    denom?: string;
-  };
-};
+export {};
 // type TradeInfo = {
 //   acceptedInfo?: any; // TODO correct this type
 //   assetsWithdrawn: boolean;
@@ -29,7 +21,6 @@ export type Asset = {
 //   state: string;
 //   whitelistedUsers: string[];
 // };
-
 // enum TradeState {
 //   Created = 'Created',
 //   Published = 'Published',
@@ -41,13 +32,11 @@ export type Asset = {
 // function stateToString(state: TradeState): string {
 //   return TradeState[state];
 // }
-
 // interface Trade {
 //   tradeId: number;
 //   counterId?: number;
 //   tradeInfo: TradeInfo;
 // }
-
 // interface UseTrades {
 //   states?: TradeState[] | undefined;
 //   owner?: string | undefined;
@@ -59,7 +48,6 @@ export type Asset = {
 //   counterer?: string;
 //   hasWhitelist?: boolean;
 // }
-
 // interface UseCounterTrades {
 //   states?: TradeState[] | undefined;
 //   owner?: string | undefined;
@@ -69,7 +57,6 @@ export type Asset = {
 //   wantedNFT?: string;
 //   containsToken?: string;
 // }
-
 // const knexDB = knex({
 //   client: 'mysql2',
 //   connection: {
@@ -79,11 +66,9 @@ export type Asset = {
 //     database: 'TRADES'
 //   }
 // });
-
 // async function destroyTradeDB() {
 //   knexDB.destroy();
 // }
-
 // async function _createTradeInfo(table: any) {
 //   table.increments('id').primary();
 //   table.integer('last_counter_id');
@@ -97,7 +82,6 @@ export type Asset = {
 //   table.boolean('assets_withdrawn');
 //   table.integer('accepted_counter_trade_id');
 // }
-
 // async function createTradeDB() {
 //   await knexDB.schema
 //     .createTable('trades', (table: any) => {
@@ -106,7 +90,6 @@ export type Asset = {
 //       table.unique('trade_id');
 //     })
 //     .catch(() => console.log('Trade table exists already'));
-
 //   await knexDB.schema
 //     .createTable('counter-trades', (table: any) => {
 //       _createTradeInfo(table);
@@ -115,7 +98,6 @@ export type Asset = {
 //       table.unique(['trade_id', 'counter_id']);
 //     })
 //     .catch(() => console.log('Counter Trade table exists already'));
-
 //   await knexDB.schema
 //     .createTable('trade_associated_assets', (table: any) => {
 //       table.integer('id');
@@ -127,7 +109,6 @@ export type Asset = {
 //       table.string('denom');
 //     })
 //     .catch(() => console.log('Associated assets table exists already'));
-
 //   await knexDB.schema
 //     .createTable('whitelisted_users', (table: any) => {
 //       table.integer('id');
@@ -135,7 +116,6 @@ export type Asset = {
 //       table.string('user');
 //     })
 //     .catch(() => console.log('Whitelist table exists already'));
-
 //   await knexDB.schema
 //     .createTable('nfts_wanted', (table: any) => {
 //       table.integer('id');
@@ -144,7 +124,6 @@ export type Asset = {
 //     })
 //     .catch(() => console.log('NFTS wanted table exists already'));
 // }
-
 // async function dropDB() {
 //   await knexDB.schema.dropTable('trades').catch(() => {});
 //   await knexDB.schema.dropTable('counter-trades').catch(() => {});
@@ -152,7 +131,6 @@ export type Asset = {
 //   await knexDB.schema.dropTable('whitelisted_users').catch(() => {});
 //   await knexDB.schema.dropTable('nfts_wanted').catch(() => {});
 // }
-
 // function getDBFields(tradeInfo: TradeInfo) {
 //   return {
 //     owner: tradeInfo.owner,
@@ -167,7 +145,6 @@ export type Asset = {
 //     assets_withdrawn: tradeInfo.assetsWithdrawn
 //   };
 // }
-
 // async function addToTradeDb({ tradeId, tradeInfo }: Trade) {
 //   return await knexDB('trades')
 //     .insert({
@@ -177,7 +154,6 @@ export type Asset = {
 //     .onConflict()
 //     .merge(); // We erase if the data is already present
 // }
-
 // async function addToCounterTradeDb({ tradeId, counterId, tradeInfo }: Trade) {
 //   return await knexDB('counter-trades')
 //     .insert({
@@ -188,7 +164,6 @@ export type Asset = {
 //     .onConflict()
 //     .merge(); // We erase if the data is already present
 // }
-
 // async function addToAssetsDB(
 //   id: number,
 //   { tradeInfo }: Trade,
@@ -199,7 +174,6 @@ export type Asset = {
 //     id,
 //     is_trade: isTrade
 //   });
-
 //   let associatedAssets = tradeInfo.associatedAssets.map((asset) => ({
 //     id,
 //     is_trade: isTrade,
@@ -213,7 +187,6 @@ export type Asset = {
 //     return await knexDB('trade_associated_assets').insert(associatedAssets);
 //   }
 // }
-
 // async function addToWhitelistedDB(
 //   id: number,
 //   { tradeInfo }: Trade,
@@ -224,7 +197,6 @@ export type Asset = {
 //     id,
 //     is_trade: isTrade
 //   });
-
 //   let whitelistedUsers = tradeInfo.whitelistedUsers.map((user) => ({
 //     id,
 //     is_trade: isTrade,
@@ -234,7 +206,6 @@ export type Asset = {
 //     return await knexDB('whitelisted_users').insert(whitelistedUsers);
 //   }
 // }
-
 // async function addToWantedNfts(
 //   id: number,
 //   { tradeInfo }: Trade,
@@ -245,7 +216,6 @@ export type Asset = {
 //     id,
 //     is_trade: isTrade
 //   });
-
 //   let nftsWanted = tradeInfo.additionalInfo.nftsWanted.map((address) => ({
 //     id,
 //     is_trade: isTrade,
@@ -255,7 +225,6 @@ export type Asset = {
 //     return await knexDB('nfts_wanted').insert(nftsWanted);
 //   }
 // }
-
 // async function addToDB(trade: Trade) {
 //   let id: number;
 //   let isTrade: boolean;
@@ -272,7 +241,6 @@ export type Asset = {
 //   await addToWantedNfts(id, trade, isTrade);
 //   return id;
 // }
-
 // async function parseFromDB(
 //   db_result: any,
 //   isTrade: boolean
@@ -280,7 +248,6 @@ export type Asset = {
 //   let associatedAssets = await getAssociatedAssets(db_result.id, isTrade);
 //   let whitelistedUsers = await getWhitelistedUsers(db_result.id, isTrade);
 //   let nftsWanted = await getNftsWanted(db_result.id, isTrade);
-
 //   return {
 //     acceptedInfo: {
 //       counter_id: db_result.accepted_counter_trade_id
@@ -312,7 +279,6 @@ export type Asset = {
 //     whitelistedUsers: whitelistedUsers.map((user) => user.user)
 //   };
 // }
-
 // async function getAssociatedAssets(id: number, isTrade: boolean) {
 //   return knexDB('trade_associated_assets')
 //     .select('*')
@@ -326,7 +292,6 @@ export type Asset = {
 // async function getNftsWanted(id: number, isTrade: boolean) {
 //   return knexDB('nfts_wanted').select('*').where({ id, is_trade: isTrade });
 // }
-
 // async function getTrade(filters?: TradeInfo) {
 //   let trade_info = await knexDB('trades').select('*');
 //   return await Promise.all(
@@ -336,7 +301,6 @@ export type Asset = {
 //     }))
 //   );
 // }
-
 // async function getCounterTrade(filters?: TradeInfo) {
 //   let counterTradeInfo = await knexDB('counter-trades').select('*');
 //   return await Promise.all(
@@ -347,7 +311,6 @@ export type Asset = {
 //     }))
 //   );
 // }
-
 // export {
 //   createTradeDB,
 //   addToDB,

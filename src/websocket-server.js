@@ -1,5 +1,5 @@
+"use strict";
 // 'use strict';
-
 // import express from 'express';
 // import 'dotenv/config';
 // import https from 'https';
@@ -8,11 +8,9 @@
 // import Redis from 'ioredis';
 // import Redlock from 'redlock';
 // import Axios from 'axios';
-
 // // import { WebSocketClient } from '@terra-money/terra.js';
 // import {WebSocketClient } from '@cosmjs/cosmwasm-stargate'
 // const RedisSMQ = require('rsmq');
-
 // async function main() {
 //   // First we create the Redis Queue to be able to broadcast message :
 //   /*
@@ -23,7 +21,6 @@
 //       console.error(err)
 //       return
 //     }
-
 //     if (resp === 1) {
 //       console.log("queue created")
 //     }
@@ -32,18 +29,14 @@
 //   const wsclient = new WebSocketClient(
 //     'ws://terra-rpc.stakely.io:26657/websocket'
 //   );
-
 //   const lcd_address = 'http://localhost:1317/';
 //   const fcd_address = 'http://localhost:3060';
-
 //   const lcd = Axios.create({
 //     baseURL: lcd_address
 //   });
-
 //   const fcd = Axios.create({
 //     baseURL: fcd_address
 //   });
-
 //   // P2P Transaction tracker
 //   wsclient.subscribe('NewBlock', {}, (data) => {
 //     console.log('suid');
@@ -54,7 +47,6 @@
 //       console.log('uiuiud');
 //     }
 //   );
-
 //   // P2P Transaction tracker
 //   wsclient.subscribeTx(
 //     {
@@ -74,7 +66,6 @@
 //       */
 //     }
 //   );
-
 //   wsclient.start();
 // }
 // main();
