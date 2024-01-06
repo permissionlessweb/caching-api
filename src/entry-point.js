@@ -8,8 +8,14 @@ import Redis from 'ioredis';
 import Redlock from 'redlock';
 import { nftInfoAPI } from './functions/nft.js';
 import { allTokensAPI, allNFTInfoAPI } from './functions/allTokens.js';
+import cors from 'cors'
 const PORT = process.env.PORT;
 const HTTPS_PORT = process.env.HTTPS_PORT;
+
+const corsOptions = {
+    origin: 'https://atlas.terp.network' 
+  };
+
 async function initDB() {
     // We start the db
     return new Redis();
@@ -43,11 +49,11 @@ app.listen(parseInt(PORT), () => {
     console.log("Serveur à l'écoute");
 });
 // Allow any to access this API.
-app.use(function (_req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-});
+// app.use(function (_req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//     next();
+// });
 app.use(function (_req, res, next) {
     if (toobusy()) {
         res.status(503).send("I'm busy right now, sorry.");
@@ -59,28 +65,28 @@ app.use(function (_req, res, next) {
 async function main() {
     const db = await initDB();
     let redlock = await initMutex(db);
-    app.get('/nfts', async (_req, res) => {
+    app.get('/nfts', cors(corsOptions), async (_req, res) => {
         await res.status(404).send('You got the wrong syntax, sorry mate');
     });
     //db.flushdb();
     // Query the current NFT database state and trigger update if necessary
-    app.get('/:network/nft_info/:address/tokenId/:tokenId', async (req, res) => {
+    app.get('/:network/nft_info/:address/tokenId/:tokenId', cors(corsOptions), async (req, res) => {
         return nftInfoAPI(db, req, res);
     });
     // Query the current NFT database state and trigger update if necessary
-    app.get('/:network/nft_info/:address/', async (req, res) => {
+    app.get('/:network/nft_info/:address/', cors(corsOptions), async (req, res) => {
         return allNFTInfoAPI(db, req, res);
     });
     // Query the current NFT database state and trigger update if necessary
-    app.get('/:network/nft_info/', async (req, res) => {
+    app.get('/:network/nft_info/',cors(corsOptions), async (req, res) => {
         return allNFTInfoAPI(db, req, res);
     });
     // Query all the migrated NFTs thus far
-    app.get('/:network/all_tokens/:address', async (req, res) => {
+    app.get('/:network/all_tokens/:address', cors(corsOptions), async (req, res) => {
         return allTokensAPI(db, req, res);
     });
     // Query all the migrated NFTs thus far
-    app.get('/:network/all_tokens/', async (req, res) => {
+    app.get('/:network/all_tokens/', cors(corsOptions), async (req, res) => {
         return allTokensAPI(db, req, res);
     });
     if (process.env.EXECUTION == 'PRODUCTION') {
