@@ -1,8 +1,8 @@
 import pkg from 'lodash';
 import { AtlasCosmWasmClient } from './stargate.js';
 // Stargate query to contracts
-async function sendIndependentQuery(networkId, contractAddress, query) {
-    const endpoint = process.env.RPC_ENDPOINT;
+async function sendIndependentQuery(network, contractAddress, query) {
+    const endpoint = process.env.RPC_ENDPOINT; //TODO: get endpoint for any chain from cosmos-kit
     const client = await AtlasCosmWasmClient.connect(endpoint);
     return client.queryContractSmart(contractAddress, query);
 }

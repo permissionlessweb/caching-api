@@ -11,6 +11,8 @@ import { allTokensAPI, allNFTInfoAPI } from './functions/allTokens.js';
 import cors from 'cors'
 const PORT = process.env.PORT;
 const HTTPS_PORT = process.env.HTTPS_PORT;
+const CORS_ENDPOINT = process.env.CORS_ENDPOINT;
+const EXECUTION = process.env.EXECUTION;
 
 const corsOptions = {
     origin: 'https://atlas.terp.network' 
@@ -25,16 +27,13 @@ async function initMutex(db) {
     // You should have one client for each independent redis node
     // or cluster.
     [db], {
-        // The expected clock drift; for more details see:
-        // http://redis.io/topics/distlock
+        // The expected clock drift; for more details see: http://redis.io/topics/distlock
         driftFactor: 0.01,
-        // The max number of times Redlock will attempt to lock a resource
-        // before erroring.
+        // The max number of times Redlock will attempt to lock a resource before erroring.
         retryCount: 1,
         // the time in ms between attempts
         retryDelay: 200,
-        // the max time in ms randomly added to retries
-        // to improve performance under high contention
+        // the max time in ms randomly added to retries to improve performance under high contention
         // see https://www.awsarchitectureblog.com/2015/03/backoff.html
         retryJitter: 200,
         // The minimum remaining time on a lock before an extension is automatically
@@ -45,9 +44,7 @@ async function initMutex(db) {
 }
 // We start the server
 const app = express();
-app.listen(parseInt(PORT), () => {
-    console.log("Serveur à l'écoute");
-});
+
 // Allow any to access this API.
 // app.use(function (_req, res, next) {
 //     res.header('Access-Control-Allow-Origin', '*');
@@ -89,7 +86,7 @@ async function main() {
     app.get('/:network/all_tokens/', cors(corsOptions), async (req, res) => {
         return allTokensAPI(db, req, res);
     });
-    if (process.env.EXECUTION == 'PRODUCTION') {
+    if ( EXECUTION == 'PRODUCTION') {
         const options = {
             cert: fs.readFileSync('/home/illiquidly/identity/fullchain.pem'),
             key: fs.readFileSync('/home/illiquidly/identity/privkey.pem')
@@ -97,4 +94,9 @@ async function main() {
         https.createServer(options, app).listen(parseInt(HTTPS_PORT));
     }
 }
+
+app.listen(parseInt(PORT), () => {
+    console.log("Serveur à l'écoute");
+});
+
 main();

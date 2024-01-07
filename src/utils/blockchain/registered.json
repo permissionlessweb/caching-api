@@ -1,0 +1,23 @@
+{
+    
+    "mainnet": {
+        "stars1...": { 
+            "contract": "",
+            "name": "",
+            "symbol": "",
+            "icon": "",
+            "homepage": "",
+            "marketplace": []
+        }
+    },
+    "testnet": {
+        "stars1...": {
+            "contract": "", 
+            "name": "",
+            "symbol": "",
+            "icon": "",
+            "homepage": "",
+            "marketplace": []
+        }
+    }
+}
